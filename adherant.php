@@ -6,8 +6,8 @@ $page->TJavascript[] = 'js/huebee.pkgd.min.js';
 $page->TCss[] = 'css/huebee.css';
 
 $controller->check_user();
-$page->name = 'index';
-$page->title = 'Accueil - SPH Gestion des adhérants';
+$page->name = 'adherant';
+$page->title = 'Gestion des adhérants';
 
 
 switch ($action) {
