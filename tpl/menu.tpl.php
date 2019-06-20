@@ -9,10 +9,13 @@
 				<li<?php if($page->name == 'adherant') echo ' class="active"'; ?>><a href="./adherant.php">Adhérants</a></li>
 				<li<?php if($page->name == 'session') echo ' class="active"'; ?>><a href="./session.php">Sessions</a></li>
 				<?php if (!empty($user->admin)) { ?>
+				<li<?php if($page->name == 'lieu') echo ' class="active"'; ?>><a href="./lieu.php">Lieux</a></li>
+				<li<?php if($page->name == 'type') echo ' class="active"'; ?>><a href="./type.php">Types</a></li>
+				<li<?php if($page->name == 'annee') echo ' class="active"'; ?>><a href="./annee.php">Années</a></li>
 				<li<?php if($page->name == 'user') echo ' class="active"'; ?>><a href="./user.php">Utilisateurs</a></li>
 				<?php } ?>
 			</ul>
-			<div class="navbar-collapse collapse navbar-right">
+			<div class="navbar-collapse collapse navbar-right mr10">
 				<ul class="nav navbar-nav">
 					<li><a href="./logout.php">Se déconnecter </a></li>
 				</ul>

@@ -16,10 +16,18 @@ html,body {
 	margin-top:50px !important;
 }
 
+.mr10 {
+	margin-right:10px !important;
+}
+
 .pt15 {
 	padding-top:15px !important;
 }
 
+.backlightgrey, .null {
+	background:#f3f3f3 !important;
+	color:#fff !important;
+}
 .backgrey, .null {
 	background:#888888 !important;
 	color:#fff !important;
@@ -70,6 +78,14 @@ label {
 	margin-top:3px;
 	margin-bottom:0;
 }
+.ligne {
+	padding:3px 0;
+}
+
+.badge {
+	border-radius:0;
+	line-height: inherit;
+}
 
 .full-input input, .full-input textarea {
 	width:100%;
@@ -97,60 +113,7 @@ label {
 #page-sidebar li.active a, #page-sidebar li.active .badge {
 	color:#fff;
 }
-#event-list .titleday {
-	vertical-align: top;
-	border:5px solid #fff;
-	padding:5px;
-	text-transform: uppercase;
-	background:#333;
-	color:#fff;
-}
-#event-list .day {
-	vertical-align: top;
-	background:#dedede;
-	border:5px solid #fff;
-	border-radius:10px;
-	padding-bottom:25px !important;
-	min-height:150px;
-	z-index:1;
-}
-#event-list .day.current {
-	background:#dede99;
-}
 
-#event-list .day div {
-	padding:5px;
-	z-index:10;
-}
-
-#event-list .day .ui-sortable-placeholder {
-	height:30px;
-	background:#333;
-	border-color:#888;
-}
-
-#event-list .day .title {
-	text-align:center;
-	background:#333;
-	color:#fff;
-}
-#event-list .day > .amount {
-	font-weight: bold;
-	background:#bcbcbc;
-}
-#event-list .day > .amountmonth {
-	font-weight: bold;
-	margin-bottom:25px;
-	border-bottom:1px solid #bcbcbc;
-}
-
-#event-list .day.weekend {
-}
-
-#waiting-payments .days {
-	overflow-y:scroll;
-	padding:0 0 0 5px !important;
-}
 
 input[name="status"] {
 	margin-left:3px;
@@ -164,112 +127,10 @@ input[name="status"] {
 	margin-bottom:5px;
 }
 
-.event {
-	position:relative;
-	cursor:pointer;
-	background:#cecece;
-	margin-bottom:5px;
-	border-radius:5px;
-	border-left:8px solid #ccc;
-	border-right:8px solid #ccc;
-}
-
-.event .amount {
-	position:absolute;
-	top:2px;
-	right:2px;
-}
-
-.event.validate {
-	color:#007700;
-}
 
 /* Connexion */
 .form-signin {
     margin: 0 auto;
     max-width: 330px;
     padding: 15px;
-}
-
-/* Tresorerie */
-
-
-#table-tresorerie {
-	font-size:12px;
-}
-#table-tresorerie .sous-compte, #table-tresorerie  div {
-    padding:0;
-}
-
-#table-tresorerie .cell {
-    border-right:1px solid #ccc;
-    padding:8px 5px;
-    text-align:right;
-}
-
-#table-tresorerie .entete.cell {
-    font-weight:bold;
-    text-align:center;
-    border-bottom:1px solid #ccc;
-}
-
-#table-tresorerie .compte {
-    text-align:left;
-}
-
-#table-tresorerie .parentCateg {
-    background:#ccc;
-}
-
-#table-tresorerie .plafond {
-    color:#269abc;
-}
-#table-tresorerie .fontred {
-    color:#ff003d !important;
-}
-#table-tresorerie .payment {
-    display:none;
-}
-#table-tresorerie .backpositif {
-    background:#29B000;
-    color:#fff !important;
-}
-#table-tresorerie .backnegatif {
-    background:#B02300;
-    color:#fff !important;
-}
-#table-tresorerie .backExceptionnel {
-	background:#00ABF4;
-    color:#fff !important;
-}
-#table-tresorerie .backGreylight {
-	background:#eee;
-}
-#table-tresorerie .backpositif .cell {
-	border-color:#29B000;
-}
-#table-tresorerie .backExceptionnel .cell {
-	border-color:#00ABF4;
-}
-#table-tresorerie .backnegatif .cell {
-	border-color:#B02300;
-}
-#table-tresorerie .backGreylight .cell {
-	border-color:#eee;
-}
-#table-tresorerie .empty .cell {
-	border:none;
-}
-#table-tresorerie .percent, #table-tresorerie .reste {
-	color:#888;
-}
-#table-tresorerie .sous-compte[reel]:not([reel='']) {
-	cursor:pointer;
-}
-
-@media print {
-	
-	#table-tresorerie .payment {
-	    display:block;
-	}
 }
