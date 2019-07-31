@@ -4,7 +4,27 @@
  *	Parent class of all other classes
  */
 abstract class CommonObject
-{	
+{
+    /**
+     * @var array       List of all fields to save
+     */
+    private $TFields = array();
+    
+    /**
+     * @var string		Column name of the ref field.
+     */
+    protected $table_ref_field = '';
+    
+    /**
+     * @var array       List of default fields to save
+     */
+    protected $TChamps = array(
+        'rowid'=>'number'
+        ,'datec'=>'date'
+        ,'fk_user_creat'=>'number'
+        ,'fk_user_modif'=>'number'
+    );
+    
 	/**
 	 * @var int The object identifier
 	 */
@@ -19,18 +39,16 @@ abstract class CommonObject
 	 * @var int The last user who modify it
 	 */
 	public $fk_user_modif;
-
+	
+	/**
+	 * @var datetime The date of creation
+	 */
+	public $datec;
+	
 	/**
 	 * @var datetime The date of last modif
 	 */
 	public $tms;
-
-	/**
-	 * @var string 		Error string
-	 * @deprecated		Use instead the array of error strings
-	 * @see             errors
-	 */
-	public $error;
 
 	/**
 	 * @var string[]	Array of error strings
@@ -61,29 +79,74 @@ abstract class CommonObject
 	 * @var string		Name of primary key
 	 */
 	public $primary_key='rowid';
-
-	/**
-	 * @var string		Column name of the ref field.
-	 */
-	protected $table_ref_field = '';
-
+	
 	/**
 	 * @var PDO		Database handler
 	 */
 	public $PDOdb;
-
-
+    
+	private function mergeFields() {
+	    $this->TFields = array_merge($this->TChamps, $this->TChamps2);
+	}
+	
+	private function generate_vars($array) {
+	    foreach($array as $elem => $value) {
+	        if($elem != 'PDOdb' && !is_array($value)) {
+	            $this->{$elem} = $value;
+	        }else if(is_array($value)) {
+	            $this->generate_vars($value);
+	        }
+	    }
+	}
+	
 	public function __construct($PDOdb) {
 		$this->PDOdb = $PDOdb;
+		$this->mergeFields();
+	}
+	
+	/****
+	 * return html code of status object
+	 * @param boolean $feminin
+	 */
+	public function get_status($feminin = false){
+	    switch($this->statut) {
+	        default :
+	            $class = 'draft';
+	            $title = 'Brouillon';
+	            break;
+	        case '1' :
+	            $class = 'valid';
+	            $title = 'Validé';
+	            if ($feminin) $title.='e';
+	            break;
+	        case '2' :
+	            $class = 'closed';
+	            $title = 'Fermé';
+	            if ($feminin) $title.='e';
+	            break;
+	        case '3' :
+	            $class = 'notpaid';
+	            $title = 'Impayé';
+	            if ($feminin) $title.='e';
+	            break;
+	    }
+	    $res = '<span class="statut '.$class.'" ></span> '.$title;
+	    return $res;
 	}
 
 	public function set_vars() {
+	    global $user;
 		foreach($_REQUEST as $champs => $value) {
-			if(array_key_exists($champs,$this->TChamps)) {
-				if($this->TChamps[$champs] == 'date') $value = date('Y-m-d',strtotime($value));
+			if(array_key_exists($champs,$this->TFields)) {
+				if($this->TFields[$champs] == 'date') $value = date('Y-m-d',strtotime($value));
 				$this->{$champs} = $value;
 			}
 		}
+		
+		// Default values
+		if(empty($this->datec)) $this->datec = date('Y-m-d H:i:s');
+		if(empty($this->fk_user_creat)) $this->fk_user_creat = $user->rowid;
+		if(empty($this->fk_user_modif)) $this->fk_user_modif = $user->rowid;
 	}
 
 	public function save() {
@@ -97,11 +160,10 @@ abstract class CommonObject
 	}
 
 	public function create() {
-
-		$champs = '`'.implode('`,`',array_keys($this->TChamps)).'`';
+	    $champs = '`'.implode('`,`',array_keys($this->TFields)).'`';
 		$sql = 'INSERT INTO '.MAIN_DB_PREFIX.$this->table_element.'('.$champs.')';
 		$sql.= ' VALUES(';
-		foreach($this->TChamps as $champs => $type) {
+		foreach($this->TFields as $champs => $type) {
 			$val = $this->{$champs};
 			switch($type) {
 				case 'date':
@@ -132,10 +194,10 @@ abstract class CommonObject
 	}
 
 	public function update() {
-		$champs = '`'.implode('`,`',array_keys($this->TChamps)).'`';
+	    $champs = '`'.implode('`,`',array_keys($this->TFields)).'`';
 		$sql = 'UPDATE '.MAIN_DB_PREFIX.$this->table_element;
 		$sql.= ' SET ';
-		foreach($this->TChamps as $champs => $type) {
+		foreach($this->TFields as $champs => $type) {
 			if($champs != $this->primary_key) {
 				$sql .= '`'.$champs.'` = ';
 				switch($type) {
@@ -208,15 +270,31 @@ abstract class CommonObject
 		}
 		return $ret;
 	}
-
-	private function generate_vars($array) {
-		foreach($array as $elem => $value) {
-			if($elem != 'PDOdb' && !is_array($value)) {
-				$this->{$elem} = $value;
-			}else if(is_array($value)) {
-				$this->generate_vars($value);
-			}
-		}
+	
+	public function get_editby() {
+	    $ret = 'n/a';
+	    $temp_user = new User($this->PDOdb);
+	    if(!empty($this->fk_user_modif)) {
+	        $temp_user->fetch($this->fk_user_modif);
+	        $ret = '<a href="user.php?action=view&id='.$temp_user->rowid.'">';
+	        $ret .='<span class="glyphicon '.$temp_user->picto.'"></span> ';
+	        $ret .= $temp_user->lastname.' '.$temp_user->firstname;
+	        $ret .='</a>';
+	    }
+	    return $ret;
+	}
+	
+	public function get_createby() {
+	    $ret = 'n/a';
+	    $temp_user = new User($this->PDOdb);
+	    if(!empty($this->fk_user_creat)) {
+	        $temp_user->fetch($this->fk_user_creat);
+	        $ret = '<a href="user.php?action=view&id='.$temp_user->rowid.'">';
+	        $ret .='<span class="glyphicon '.$temp_user->picto.'"></span> ';
+	        $ret .= $temp_user->lastname.' '.$temp_user->firstname;
+	        $ret .='</a>';
+	    }
+	    return $ret;
 	}
 
 }

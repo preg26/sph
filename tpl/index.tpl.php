@@ -20,7 +20,7 @@
 	
 	<div class="col-md-12 pt15">
 		<div class="col-md-12">
-			<h1>Tableau de bord</h1>
+			<h1><span class="glyphicon glyphicon-dashboard"></span> Tableau de bord</h1>
 			
 			<!-- 5 sessions full -->
 			<div class="col-md-3 m15">

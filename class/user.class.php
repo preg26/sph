@@ -7,9 +7,8 @@ class User extends CommonObject
 {
 	public $element='user';
 	public $table_element='user';
-	public $TChamps = array(
-				'rowid'=>'number'
-				,'login'=>'string'
+	protected $TChamps2 = array(
+				'login'=>'string'
 				,'firstname'=>'string'
 				,'lastname'=>'string'
 				,'email'=>'string'
@@ -42,6 +41,8 @@ class User extends CommonObject
 	var $datepreviouslogin;
 	var $statut;
 	
+	var $picto = 'glyphicon-user';
+	
 	public function login($login, $password) {
 		if(!empty($login) && !empty($password)) {
 			$sql = "SELECT ".$this->primary_key;
@@ -57,7 +58,14 @@ class User extends CommonObject
 	}
 	
 	public function update() {
-		$this->pass_crypted = sha1($this->pass_crypted);
+	    if($this->pass_crypted <> '')
+	    {
+		  $this->pass_crypted = sha1($this->pass_crypted);
+	    } else {
+		      $temp_user = new User($this->PDOdb);
+		      $temp_user->fetch($this->rowid);
+		      $this->pass_crypted = $temp_user->pass_crypted;
+	    }
 		return parent::update();
 	}
 	
@@ -65,5 +73,5 @@ class User extends CommonObject
 		$this->pass_crypted = sha1($this->pass_crypted);
 		return parent::create();
 	}
-	
+		
 }

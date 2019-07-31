@@ -23,6 +23,7 @@
 	$page->TJavascript[] = 'js/jquery-ui/jquery-ui.min.js';
 	$page->TJavascript[] = 'includes/bootstrap/js/bootstrap.js';
 	$page->TJavascript[] = 'js/select2.min.js';
+	$page->TJavascript[] = 'js/sph-all.js';
 	
 	// Liste css
 	$page->TCss[] = 'includes/bootstrap/css/bootstrap.css';
@@ -30,4 +31,5 @@
 	$page->TCss[] = 'css/style.css';
 	$page->TCss[] = 'css/select2.css';
 	
-	
+	$action = GETPOST('action');
+	$id = GETPOST('id');

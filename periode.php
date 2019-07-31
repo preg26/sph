@@ -1,23 +1,24 @@
 <?php
 require_once 'includes/preload.php';
 
-$controller->check_user();
-$page->name = 'adherant';
-$page->title = 'Gestion des adhérants';
+$page->TJavascript[] = 'js/spe-index.js';
+$page->TJavascript[] = 'js/huebee.pkgd.min.js';
+$page->TCss[] = 'css/huebee.css';
 
-$object = new Adherant($PDOdb);
+$controller->check_user();
+$page->name = 'periode';
+$page->title = 'Gestion des périodes d\'inscription';
+
+$object = new Periode($PDOdb);
 if(!empty($id)) $object->fetch($id);
 
 switch ($action) {
     case 'update':
-        $ex_pass = $object->pass_crypted;
-        $object->set_vars();
-        if(empty($object->pass_crypted)) $object->pass_crypted = $ex_pass;
     case 'create':
         $object->set_vars();
         $res = $object->save();
         if($res) {
-            header('Location:./adherant.php');
+            header('Location:./periode.php');
         } else {
             echo 'Erreur, veuillez contacter l\'administrateur';
         }
@@ -26,7 +27,7 @@ switch ($action) {
     case 'delete':
         $res = $object->delete();
         if($res) {
-            header('Location:./adherant.php');
+            header('Location:./periode.php');
         } else {
             echo 'Erreur, veuillez contacter l\'administrateur';
         }
@@ -42,12 +43,12 @@ switch($action) {
     case 'new' :
     case 'view' :
     case 'edit' :
-        include 'tpl/adherant/card.tpl.php';
+        include 'tpl/periode/card.tpl.php';
         break;
     case 'list':
     default :
         $TObjects = $object->fetchAll();
-        include 'tpl/adherant/list.tpl.php';
+        include 'tpl/periode/list.tpl.php';
         break;
 }
 

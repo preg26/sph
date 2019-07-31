@@ -10,8 +10,9 @@
 				<li<?php if($page->name == 'session') echo ' class="active"'; ?>><a href="./session.php">Sessions</a></li>
 				<?php if (!empty($user->admin)) { ?>
 				<li<?php if($page->name == 'lieu') echo ' class="active"'; ?>><a href="./lieu.php">Lieux</a></li>
+				<li<?php if($page->name == 'jeu') echo ' class="active"'; ?>><a href="./jeu.php">Jeux</a></li>
 				<li<?php if($page->name == 'type') echo ' class="active"'; ?>><a href="./type.php">Types</a></li>
-				<li<?php if($page->name == 'annee') echo ' class="active"'; ?>><a href="./annee.php">Années</a></li>
+				<li<?php if($page->name == 'periode') echo ' class="active"'; ?>><a href="./periode.php">Périodes</a></li>
 				<li<?php if($page->name == 'user') echo ' class="active"'; ?>><a href="./user.php">Utilisateurs</a></li>
 				<?php } ?>
 			</ul>

@@ -103,6 +103,10 @@ label {
 #page-sidebar {
 	background:#f8f8f8;
 	min-height:100%;
+	position:fixed;
+	top:50px;
+	left:0;
+	bottom:0;
 }
 #page-sidebar li.active a {
 	background:#333;
@@ -127,6 +131,27 @@ input[name="status"] {
 	margin-bottom:5px;
 }
 
+.male {
+	color:#337ab7;
+}
+.female {
+	color:#9a33b7;
+}
+
+
+/* Statuts */
+.statut {
+	display:inline-block;
+	width:14px;
+	height:14px;
+	border-radius:3px;
+	background:#fff;
+	border:1px solid #888;
+}
+
+.statut.valid {background:#20c820;}
+.statut.closed {background:#cc0000;}
+.statut.notpaid {background:#e7ea20;}
 
 /* Connexion */
 .form-signin {

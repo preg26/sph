@@ -1,7 +1,7 @@
 <?php
 require_once 'includes/preload.php';
 
-$page->TJavascript[] = 'js/spe-index.js';
+$page->TJavascript[] = 'js/sph-index.js';
 $page->TJavascript[] = 'js/huebee.pkgd.min.js';
 $page->TCss[] = 'css/huebee.css';
 

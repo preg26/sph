@@ -1,37 +1,37 @@
 <?php
 require_once 'includes/preload.php';
 
-$controller->check_user();
-$page->name = 'adherant';
-$page->title = 'Gestion des adhérants';
+$page->TJavascript[] = 'js/huebee.pkgd.min.js';
+$page->TCss[] = 'css/huebee.css';
 
-$object = new Adherant($PDOdb);
+$controller->check_user();
+$page->name = 'jeu';
+$page->title = 'Gestion des jeux disponibles';
+
+$object = new Jeu($PDOdb);
 if(!empty($id)) $object->fetch($id);
 
 switch ($action) {
     case 'update':
-        $ex_pass = $object->pass_crypted;
-        $object->set_vars();
-        if(empty($object->pass_crypted)) $object->pass_crypted = $ex_pass;
     case 'create':
         $object->set_vars();
         $res = $object->save();
         if($res) {
-            header('Location:./adherant.php');
+            header('Location:./jeu.php');
         } else {
             echo 'Erreur, veuillez contacter l\'administrateur';
         }
         exit;
         break;
-    case 'delete':
-        $res = $object->delete();
-        if($res) {
-            header('Location:./adherant.php');
-        } else {
-            echo 'Erreur, veuillez contacter l\'administrateur';
-        }
-        exit;
-        break;
+	case 'delete':
+	    $res = $object->delete();
+	    if($res) {
+	        header('Location:./jeu.php');
+	    } else {
+	        echo 'Erreur, veuillez contacter l\'administrateur';
+	    }
+	    exit;
+	    break;
 }
 
 // Cas vue interface pour type
@@ -42,12 +42,12 @@ switch($action) {
     case 'new' :
     case 'view' :
     case 'edit' :
-        include 'tpl/adherant/card.tpl.php';
+        include 'tpl/jeu/card.tpl.php';
         break;
     case 'list':
     default :
         $TObjects = $object->fetchAll();
-        include 'tpl/adherant/list.tpl.php';
+        include 'tpl/jeu/list.tpl.php';
         break;
 }
 
