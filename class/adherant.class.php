@@ -25,6 +25,7 @@ class Adherant extends CommonObject
 	    ,'sex'=>'string'
 	);
 	
+	var $defaultorder='lastname,firstname';
 	var $rowid;
 	var $email;
 	var $lastname;

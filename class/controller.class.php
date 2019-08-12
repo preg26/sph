@@ -10,8 +10,6 @@ class Controller
 	/**
 	 *	Constructor
 	 *
-	 * @param	$db		DataBase	Dolibarr Database Object
-	 * @param	$conf	array()		Array with all Dolibarr configs
 	 * @param	$user	User		Dolibarr User Object
 	 */
 	function __construct($user) {
@@ -22,7 +20,7 @@ class Controller
 	 *	Function login
 	 * @param	$page	Page	Object
 	 *
-	 * @return	TODO
+	 * @return	int
 	 */
     function login($login,$password)
     {

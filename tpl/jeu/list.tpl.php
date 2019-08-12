@@ -10,7 +10,8 @@
 			<div class="table">
 				<div class="row">
 					<div class="col-md-2">Nom court</div>
-					<div class="col-md-6">Nom</div>
+					<div class="col-md-4">Nom</div>
+					<div class="col-md-2">Type</div>
 					<div class="col-md-2">Date création</div>
 					<div class="col-md-1">Statut</div>
 					<div class="col-md-1 text-right">Actions</div>
@@ -21,15 +22,16 @@
     	      			?>
 				<div class="row">
 					<div class="col-md-2">
-    	      			<a href="?action=view&id=<?php echo $object->rowid; ?>">
-    	      				<span class="glyphicon <?php echo $object->picto; ?>"></span> <?php echo $object->ref; ?>
-    	      			</a>
+    	      			<?php echo $object->get_nomurl(); ?>
     	      		</div>
-					<div class="col-md-6">
+					<div class="col-md-4">
     	      			<a href="?action=view&id=<?php echo $object->rowid; ?>">
     	      				<?php echo $object->libelle; ?>
     	      			</a>
     	      		</div>
+					<div class="col-md-2">
+            	      		<?php echo $object->type->get_nomurl(); ?>
+					</div>
 					<div class="col-md-2">
             	      		<?php echo $object->datec; ?>
 					</div>

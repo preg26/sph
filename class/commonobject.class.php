@@ -29,6 +29,8 @@ abstract class CommonObject
 	 * @var int The object identifier
 	 */
 	public $rowid=0;
+	
+	public $defaultorder='libelle';
 
 	/**
 	 * @var int The user who create it
@@ -109,28 +111,49 @@ abstract class CommonObject
 	 * @param boolean $feminin
 	 */
 	public function get_status($feminin = false){
-	    switch($this->statut) {
-	        default :
-	            $class = 'draft';
-	            $title = 'Brouillon';
-	            break;
-	        case '1' :
-	            $class = 'valid';
-	            $title = 'Validé';
-	            if ($feminin) $title.='e';
-	            break;
-	        case '2' :
-	            $class = 'closed';
-	            $title = 'Fermé';
-	            if ($feminin) $title.='e';
-	            break;
-	        case '3' :
-	            $class = 'notpaid';
-	            $title = 'Impayé';
-	            if ($feminin) $title.='e';
-	            break;
+	    if($this->statut != null) {
+	        switch($this->statut) {
+	            default :
+	                $class = 'draft';
+	                $title = 'Brouillon';
+	                break;
+	            case '1' :
+	                $class = 'valid';
+	                $title = 'Validé';
+	                if ($feminin) $title.='e';
+	                break;
+	            case '2' :
+	                $class = 'closed';
+	                $title = 'Fermé';
+	                if ($feminin) $title.='e';
+	                break;
+	            case '3' :
+	                $class = 'notpaid';
+	                $title = 'Impayé';
+	                if ($feminin) $title.='e';
+	                break;
+	        }
+	        $res = '<span class="statut '.$class.'" ></span> '.$title;
+	    }else {
+	        $res = 'n/a';
 	    }
-	    $res = '<span class="statut '.$class.'" ></span> '.$title;
+	    return $res;
+	}
+	
+	/****
+	 * return link of element card
+	 */
+	public function get_nomurl(){
+	    $res = '';
+	    if($this->rowid != null) {
+	        $res = '<a href="'.$this->element.'.php?action=view&id='.$this->rowid.'">';
+	        $res .='<span class="glyphicon '.$this->picto.'"></span> ';
+	        if(!empty($this->ref))
+	            $res .= $this->ref;
+	        else 
+	            $res .= $this->libelle;
+    	    $res .='</a>';
+	    }
 	    return $res;
 	}
 
@@ -260,6 +283,7 @@ abstract class CommonObject
 		// Get user
 		$sql = "SELECT rowid";
 		$sql.= " FROM ".MAIN_DB_PREFIX.$this->table_element;
+		$sql.= " ORDER BY ".$this->defaultorder;
 
 		$req = $this->PDOdb->query($sql);
 		while($res = $req->fetch(PDO::FETCH_OBJ)){
@@ -295,6 +319,52 @@ abstract class CommonObject
 	        $ret .='</a>';
 	    }
 	    return $ret;
+	}
+	
+	/* STATICS FUNCTIONS */
+	
+	public static function select_all($name = null, $choice = null){
+	    global $PDOdb;
+	    
+	    $res = null;
+	    if(!empty($name)){
+	        $staticObject = new static($PDOdb);
+	        $TObjects = $staticObject->fetchAll();
+	        $options = '<option value="-1">&nbsp;</option>';
+	        foreach ($TObjects as $obj) {
+	            $selected = false;
+	            if($obj->rowid == $choice) {
+	                $selected = true;
+	            }
+	            $options .= '<option value="'.$obj->rowid.'" '.(($selected)?'selected="selected"':'').'>'.$obj->libelle.'</option>';
+	        }
+	        $res = '<select name="'.$name.'" id ="'.$name.'">'.$options.'</select>';
+	    }else{
+	        $res = 'Erreur';
+	    }
+	    return $res;
+	}
+	
+	public static function multiselect_all($name = null, $TChoices = null){
+	    global $PDOdb;
+	    
+	    $res = null;
+	    if(!empty($name)){
+	        $staticObject = new static($PDOdb);
+	        $TObjects = $staticObject->fetchAll();
+	        $options = '';
+	        foreach ($TObjects as $obj) {
+	            $selected = false;
+	            if(array_key_exists($obj->rowid, $TChoices)) {
+	                $selected = true;
+	            }
+	            $options .= '<option value="'.$obj->rowid.'" '.(($selected)?'selected="selected"':'').'>'.$obj->libelle.'</option>';
+	        }
+	        $res = '<select name="'.$name.'" id ="'.$name.'">'.$options.'</select>';
+	    }else{
+	        $res = 'Erreur';
+	    }
+	    return $res;
 	}
 
 }

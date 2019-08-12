@@ -16,6 +16,7 @@ class User extends CommonObject
 				,'pass_crypted'=>'string'
 			);
 	
+	var $defaultorder='login';
 	var $rowid;
 	var $email;
 	var $skype;

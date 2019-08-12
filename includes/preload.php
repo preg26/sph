@@ -3,6 +3,9 @@
 	
 	// Global prefix database
 	define('MAIN_DB_PREFIX', 'sph_');
+	@error_reporting('E_ALL');
+	ini_set("display_errors", 1);
+	
 	
 	// BDD et formatage utf8
 	$PDOdb = SPDO::getInstance();
