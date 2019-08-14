@@ -61,7 +61,7 @@
 				<?php
 			} elseif($action == 'edit') {
 				?>
-			<h4>Modification d'une période</h4>
+			<h4>Modification d'un utilisateur</h4>
 			<form method="post" action="">
 				<div class="row">
 					<div class="col-md-1 text-right">

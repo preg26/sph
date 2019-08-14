@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Type class
+ * Lieu class
  */
 class Lieu extends CommonObject
 {

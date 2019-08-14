@@ -8,7 +8,7 @@
 		<?php 
 		    if($action == 'new') {
 		?>
-			<h4>Nouvel utilisateur</h4>
+			<h4>Nouvel Adhérent</h4>
 			<form method="post" action="">
 				
 				<div class="row">
@@ -154,7 +154,7 @@
 				<?php
 			} elseif($action == 'edit') {
 				?>
-			<h4>Modification d'une période</h4>
+			<h4>Modification d'un adhérent</h4>
 			<form method="post" action="">
 				<div class="row">
 					<div class="col-md-2 text-right">
@@ -488,6 +488,14 @@
 			</div>        
 			<div class="row pt15">
 				<div class="col-md-12 text-right">
+					<?php if($object->statut == 0): ?>
+					<a class="btn btn-success" href="?action=valid&id=<?php echo $id; ?>">Valider</a>
+					<?php 
+					endif;
+					if($object->statut == 1): 
+					?>
+					<a class="btn btn-success" href="?action=paid&id=<?php echo $id; ?>">Classer payé</a>
+					<?php endif; ?>
 					<a class="btn btn-primary" href="?action=edit&id=<?php echo $id; ?>">Modifier</a>
 					<?php if(!empty($id)): ?>
 					<a class="btn btn-danger" href="?action=delete&id=<?php echo $id; ?>">Supprimer</a>

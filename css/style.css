@@ -24,9 +24,15 @@ html,body {
 	padding-top:15px !important;
 }
 
+.p5 {
+	padding:5px;
+}
+.row {
+	padding: 5px 0;
+}
 .backlightgrey, .null {
 	background:#f3f3f3 !important;
-	color:#fff !important;
+	color:#555753!important;
 }
 .backgrey, .null {
 	background:#888888 !important;
@@ -36,8 +42,12 @@ html,body {
 	background:#c6efce !important;
 	color:#006100 !important;
 }
-.backgreenlight {
+.backlightgreen {
 	background:#88DD88 !important;
+}
+.backorange {
+	background:#f57900 !important;
+	color:#ffffff !important;
 }
 .backred, .negatif {
 	background:#ffc7ce !important;
@@ -85,6 +95,9 @@ label {
 .badge {
 	border-radius:0;
 	line-height: inherit;
+}
+.hidden {
+	display:none;
 }
 
 .full-input input, .full-input textarea {
@@ -150,8 +163,8 @@ input[name="status"] {
 }
 
 .statut.valid {background:#20c820;}
-.statut.closed {background:#cc0000;}
-.statut.notpaid {background:#e7ea20;}
+.statut.closed {background:#eeeeec;}
+.statut.notpaid {background:#cc0000;}
 
 /* Connexion */
 .form-signin {

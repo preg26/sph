@@ -1,6 +1,5 @@
-	
 <div class="col-md-2">
-	<div class="navbar-left col-md-2" id="page-sidebar">
+	<div class="navbar-left col-md-2 pt15" id="page-sidebar">
 		<h4>Utilisateurs du logiciel</h4>
 		<ul class="nav nav-pills nav-stacked">
 	      <li>

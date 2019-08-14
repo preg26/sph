@@ -75,7 +75,7 @@
 					Créé par
 				</div>
 				<div class="col-md-10">
-					<?php echo $object->fk_user_creat; ?>
+					<?php echo $object->get_createby(); ?>
 				</div>
 			</div>
 			<div class="row">
@@ -91,7 +91,7 @@
 					Modifié par
 				</div>
 				<div class="col-md-10">
-					<?php echo $object->fk_user_modif; ?>
+					<?php echo $object->get_editby(); ?>
 				</div>
 			</div>
 			<div class="row">

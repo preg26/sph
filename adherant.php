@@ -9,10 +9,28 @@ $object = new Adherant($PDOdb);
 if(!empty($id)) $object->fetch($id);
 
 switch ($action) {
+    case 'valid':
+        $object->statut = 1;
+        $res = $object->save();
+        if($res) {
+            header('Location:./adherant.php?action=view&id='.$id);
+        } else {
+            echo 'Erreur, veuillez contacter l\'administrateur';
+        }
+        exit;
+        break;
+    case 'paid':
+        $object->statut = 2;
+        $res = $object->save();
+        if($res) {
+            header('Location:./adherant.php?action=view&id='.$id);
+        } else {
+            echo 'Erreur, veuillez contacter l\'administrateur';
+        }
+        exit;
+        break;
     case 'update':
-        $ex_pass = $object->pass_crypted;
         $object->set_vars();
-        if(empty($object->pass_crypted)) $object->pass_crypted = $ex_pass;
     case 'create':
         $object->set_vars();
         $res = $object->save();

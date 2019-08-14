@@ -17,6 +17,7 @@ class User extends CommonObject
 			);
 	
 	var $defaultorder='login';
+	var $defaultnomurl=array('lastname','firstname');
 	var $rowid;
 	var $email;
 	var $skype;

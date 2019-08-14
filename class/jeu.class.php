@@ -14,6 +14,9 @@ class Jeu extends CommonObject
 	    ,'fk_type'=>'number'
 	);
 	
+	var $defaultorder='ref';
+	var $defaultnomurl='ref';
+	
 	var $rowid;
 	var $ref;
 	var $libelle;

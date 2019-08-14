@@ -1,6 +1,6 @@
 <?php
 	require_once 'includes/preload.php';
-		
+    /*
 	$action = GETPOST('action');
 	$rowid = GETPOST('rowid');
 	$date = GETPOST('new_date');
@@ -16,4 +16,5 @@
 		default:
 			break;
 	}
+	*/
 	

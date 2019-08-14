@@ -30,7 +30,15 @@ abstract class CommonObject
 	 */
 	public $rowid=0;
 	
+	/**
+	 * @var varchar(100) The default column used to order results sql
+	 */
 	public $defaultorder='libelle';
+	
+	/**
+	 * @var varchar(100) The default column used for get_nomurl()
+	 */
+	public $defaultnomurl='libelle';
 
 	/**
 	 * @var int The user who create it
@@ -148,10 +156,19 @@ abstract class CommonObject
 	    if($this->rowid != null) {
 	        $res = '<a href="'.$this->element.'.php?action=view&id='.$this->rowid.'">';
 	        $res .='<span class="glyphicon '.$this->picto.'"></span> ';
-	        if(!empty($this->ref))
+	        if(!empty($this->defaultnomurl)) {
+	            if(is_array($this->defaultnomurl)) {
+	                foreach($this->defaultnomurl as $item) {
+	                    $res .= $this->{$item}.' ';
+	                }
+	            }else {
+	               $res .= $this->{$this->defaultnomurl};
+	            }
+	        }else if(!empty($this->ref)) {
 	            $res .= $this->ref;
-	        else 
+	        } else {
 	            $res .= $this->libelle;
+	        }
     	    $res .='</a>';
 	    }
 	    return $res;
@@ -277,22 +294,50 @@ abstract class CommonObject
 			return -1;
 		}
 	}
-
+	
 	public function fetchAll() {
-		$ret = array();
-		// Get user
-		$sql = "SELECT rowid";
-		$sql.= " FROM ".MAIN_DB_PREFIX.$this->table_element;
-		$sql.= " ORDER BY ".$this->defaultorder;
-
-		$req = $this->PDOdb->query($sql);
-		while($res = $req->fetch(PDO::FETCH_OBJ)){
-			$class = get_class($this);
-			$object = new $class($this->PDOdb);
-			$object->fetch($res->rowid);
-			$ret[$object->rowid] = $object;
-		}
-		return $ret;
+	    $ret = array();
+	    // Get user
+	    $sql = "SELECT rowid";
+	    $sql.= " FROM ".MAIN_DB_PREFIX.$this->table_element;
+	    $sql.= " ORDER BY ".$this->defaultorder;
+	    
+	    $req = $this->PDOdb->query($sql);
+	    while($res = $req->fetch(PDO::FETCH_OBJ)){
+	        $class = get_class($this);
+	        $object = new $class($this->PDOdb);
+	        $object->fetch($res->rowid);
+	        $ret[$object->rowid] = $object;
+	    }
+	    return $ret;
+	}
+	
+	/*
+	 * @function fetchAllFor
+	 * 
+	 * $TSearch    Array   array into each fields constructed like : array : column, operator, value
+	 * 
+	 * return $ret
+	 */
+	public function fetchAllFor($TSearch=array()) {
+	    $ret = array();
+	    // Get user
+	    $sql = "SELECT rowid";
+	    $sql.= " FROM ".MAIN_DB_PREFIX.$this->table_element;
+	    $sql.= " WHERE 1 ";
+	    foreach($TSearch as $TRestrict) {
+	        $sql.= " AND ".$TRestrict['column']." ".$TRestrict['operator']." ".$TRestrict['value'];
+	    }
+	    $sql.= " ORDER BY ".$this->defaultorder;
+	    
+	    $req = $this->PDOdb->query($sql);
+	    while($res = $req->fetch(PDO::FETCH_OBJ)){
+	        $class = get_class($this);
+	        $object = new $class($this->PDOdb);
+	        $object->fetch($res->rowid);
+	        $ret[$object->rowid] = $object;
+	    }
+	    return $ret;
 	}
 	
 	public function get_editby() {
@@ -360,7 +405,7 @@ abstract class CommonObject
 	            }
 	            $options .= '<option value="'.$obj->rowid.'" '.(($selected)?'selected="selected"':'').'>'.$obj->libelle.'</option>';
 	        }
-	        $res = '<select name="'.$name.'" id ="'.$name.'">'.$options.'</select>';
+	        $res = '<select multiple="multiple" name="'.$name.'[]" id ="'.$name.'">'.$options.'</select>';
 	    }else{
 	        $res = 'Erreur';
 	    }
