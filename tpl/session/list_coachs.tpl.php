@@ -50,7 +50,7 @@
 	      		<?php echo $item->email; ?>
 			</div>
 			<div class="col-md-2">
-	      		<?php echo $object->get_taux_presence($item->rowid); ?>
+	      		<?php echo $object->get_taux_presence(null, $item->rowid); ?>
 			</div>
 			<div class="col-md-2">
     	      	<?php echo $item->get_status(); ?>

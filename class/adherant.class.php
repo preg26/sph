@@ -16,6 +16,7 @@ class Adherant extends CommonObject
 	    ,'zip'=>'number'
 	    ,'town'=>'string'
 	    ,'country'=>'string'
+	    ,'birth_date'=>'date'
 	    ,'birth_address'=>'string'
 	    ,'birth_zip'=>'number'
 	    ,'birth_town'=>'string'
@@ -46,7 +47,13 @@ class Adherant extends CommonObject
 	var $birth_country;
 	var $phone;
 	var $statut;
-	var $picto = 'glyphicon-education';
+	var $TSessions = array();
+	var $picto = 'glyphicon-user';
+	
+	public function fetch($id) {
+	    $res = parent::fetch($id);
+	    return $res;
+	}
 	
 	public function get_age() {
 	    $age = (int) ((time() - strtotime($this->birth_date)) / 3600 / 24 / 365);
@@ -54,12 +61,22 @@ class Adherant extends CommonObject
 	}
 	
 	public function get_sessions() {
-	    $res = 'RL<br/>Overwatch';
+	    $this->fetch_sessions();
+	    $res = '';
+	    $i = 1;
+	    if(!empty($this->TSessions)) {
+	        foreach($this->TSessions as $session) {
+	            if($i==2) $res.='<br/>';
+	            $nomurl = $session->get_nomurl('ref');
+	            $res .= $nomurl;
+	            $i++;
+	        }
+	    }
 	    return $res;
 	}
 	
 	public function get_taux_presence() {
-	    $res = '100';
+	    $res = '0';
 	    return $res;
 	}
 	
@@ -90,6 +107,21 @@ class Adherant extends CommonObject
 	        $res = 'n/a';
 	    }
 	    return $res;
+	}
+	
+	public function fetch_sessions() {
+        $TRes = array();
+	    $link = new Session_Adherant($this->PDOdb);
+	    $TLinks = $link->fetchAllFor(array(array('column' => 'fk_adherant', 'operator' => '=', 'value' => $this->rowid)));
+	    if(!empty($TLinks)) {
+	        foreach($TLinks as $link) {
+	            $session = new Session($this->PDOdb);
+	            $session->fetch($link->fk_session);
+	            $TRes[$session->rowid] = $session;
+	        }
+	    }
+	    $this->TSessions = $TRes;
+	    return $TRes;
 	}
 	
 }

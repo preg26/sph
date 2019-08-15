@@ -151,12 +151,14 @@ abstract class CommonObject
 	/****
 	 * return link of element card
 	 */
-	public function get_nomurl(){
+	public function get_nomurl($field = null){
 	    $res = '';
 	    if($this->rowid != null) {
 	        $res = '<a href="'.$this->element.'.php?action=view&id='.$this->rowid.'">';
 	        $res .='<span class="glyphicon '.$this->picto.'"></span> ';
-	        if(!empty($this->defaultnomurl)) {
+	        if(!empty($field)) {
+	            $res .= $this->{$field};
+	        } else if(!empty($this->defaultnomurl)) {
 	            if(is_array($this->defaultnomurl)) {
 	                foreach($this->defaultnomurl as $item) {
 	                    $res .= $this->{$item}.' ';
@@ -164,7 +166,7 @@ abstract class CommonObject
 	            }else {
 	               $res .= $this->{$this->defaultnomurl};
 	            }
-	        }else if(!empty($this->ref)) {
+	        } else if(!empty($this->ref)) {
 	            $res .= $this->ref;
 	        } else {
 	            $res .= $this->libelle;
@@ -226,6 +228,7 @@ abstract class CommonObject
 		
 		$req = $this->PDOdb->query($sql);
 		if($req) {
+		    $this->rowid = $this->PDOdb->lastInsertId();
 			return 1;
 		}else{
 			return -1;

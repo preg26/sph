@@ -43,7 +43,7 @@ class User extends CommonObject
 	var $datepreviouslogin;
 	var $statut;
 	
-	var $picto = 'glyphicon-user';
+	var $picto = 'glyphicon-education';
 	
 	public function login($login, $password) {
 		if(!empty($login) && !empty($password)) {

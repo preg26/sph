@@ -26,7 +26,7 @@ switch ($action) {
         $object->set_vars();
         $res = $object->save();
         if($res) {
-            header('Location:./session.php');
+            header('Location:./session.php?action=view&id='.$object->rowid);
         } else {
             echo 'Erreur, veuillez contacter l\'administrateur';
         }
@@ -85,6 +85,35 @@ switch ($action) {
         }
         exit;
         break;
+    case 'checkin_save' :
+        $checkin = new Session_Checkin($PDOdb);
+        $checkin->set_vars();
+        $res = $checkin->save();
+        
+        if($res) {
+            // On save toutes les lignes
+            foreach($_REQUEST['coach'] as $idcoach) {
+                $checkin_det = new Session_Checkin_det($PDOdb);
+                $checkin_det->set_vars();
+                $checkin_det->fk_checkin = $checkin->rowid;
+                $checkin_det->fk_user = $idcoach;
+                $checkin_det->save();
+                $checkin->TDet[] = $checkin_det;
+            }
+            foreach($_REQUEST['adherant'] as $idadherant) {
+                $checkin_det = new Session_Checkin_det($PDOdb);
+                $checkin_det->set_vars();
+                $checkin_det->fk_checkin = $checkin->rowid;
+                $checkin_det->fk_adherant = $idadherant;
+                $checkin_det->save();
+                $checkin->TDet[] = $checkin_det;
+            }
+            header('Location:./session.php?action=view&id='.$id);
+        } else {
+            echo 'Erreur, veuillez contacter l\'administrateur';
+        }
+        exit;
+        break;
 }
 
 // Cas vue interface pour type
@@ -92,6 +121,9 @@ include 'tpl/header.tpl.php';
 include 'tpl/menu.tpl.php';
 
 switch($action) {
+    case 'checkin' :
+        include 'tpl/session/checkin/card.tpl.php';
+        break;
     case 'new' :
     case 'view' :
     case 'edit' :

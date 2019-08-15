@@ -33,6 +33,7 @@ class Session extends CommonObject
 	var $statut;
 	var $TAdherants = array();
 	var $TCoachs = array();
+	var $TCheckin = array();
 	var $picto = 'glyphicon-book';
 	
 	public function fetch($id) {
@@ -140,19 +141,28 @@ class Session extends CommonObject
 	    return $res;
 	}
 	
-	public function get_nomurl() {
+	public function get_nomurl($field = 'libelle') {
 	    $res = '';
 	    if($this->rowid != null) {
 	        $res = '<a href="'.$this->element.'.php?action=view&id='.$this->rowid.'">';
 	        $res .='<span class="glyphicon '.$this->picto.'"></span> ';
-            $res .= $this->jeu->libelle;
+	        $res .= $this->jeu->{$field};
             $res .='</a>';
 	    }
 	    return $res;
 	}
 	
 	public function get_coachs() {
-	    return '';
+	    $res = '';
+	    $i=1;
+	    if(!empty($this->TCoachs)) {
+	        foreach($this->TCoachs as $coach) {
+	            if($i>1) $res .= '<br/>';
+	            $res .= $coach->get_nomurl();
+	            $i++;
+	        }
+	    }
+	    return $res;
 	}
 	
 	public function get_badge_places() {
@@ -179,8 +189,40 @@ class Session extends CommonObject
         return $res;
 	}
 	
-	public function get_taux_presence($idAdh) {
-	    $res = '100';
+	public function fetch_checkin() {
+	    $TRes = array();
+	    // Fetching des checkins pour cette session
+	    $TSearch = array(array('column'=>'fk_session', 'operator'=>'=','value'=>$this->rowid));
+	    $checkin = new Session_Checkin($this->PDOdb);
+	    $TRes = $checkin->fetchAllFor($TSearch);
+	    $this->TCheckin = $TRes;
+	    
+	    return $TRes;
+	}
+	
+	public function get_taux_presence($idAdh=null, $idCoach=null) {
+	    $res = '0/0';
+	    $this->fetch_checkin();
+	    if(!empty($idAdh) && count($this->TCheckin) > 0) {
+	        // Cas adhérant
+	        $TSearch = array(
+	            array('column'=>'fk_checkin', 'operator'=>'IN','value'=>'('.implode(',',array_keys($this->TCheckin)).')')
+	            ,array('column'=>'fk_adherant', 'operator'=>'=','value'=>$idAdh)
+	        );
+	        $checkindet = new Session_Checkin_det($this->PDOdb);
+	        $TRes = $checkindet->fetchAllFor($TSearch);
+	        $res = count($TRes).'/'.count($this->TCheckin);
+	    } else if(!empty($idCoach) && count($this->TCheckin) > 0) {
+	        // Cas coach
+	        $TSearch = array(
+	            array('column'=>'fk_checkin', 'operator'=>'IN','value'=>'('.implode(',',array_keys($this->TCheckin)).')')
+	            ,array('column'=>'fk_user', 'operator'=>'=','value'=>$idCoach)
+	        );
+	        $checkindet = new Session_Checkin_det($this->PDOdb);
+	        $TRes = $checkindet->fetchAllFor($TSearch);
+	        $res = count($TRes).'/'.count($this->TCheckin);
+	        
+	    }
 	    return $res;
 	}
 }

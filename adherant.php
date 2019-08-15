@@ -30,7 +30,6 @@ switch ($action) {
         exit;
         break;
     case 'update':
-        $object->set_vars();
     case 'create':
         $object->set_vars();
         $res = $object->save();

@@ -363,6 +363,9 @@
 			</div>        
 			<div class="row pt15">
 				<div class="col-md-12 text-right">
+					<?php if(!empty($object->TAdherants)): ?>
+					<a class="btn btn-warning" href="?action=checkin&id=<?php echo $id; ?>">Check-In</a>
+					<?php endif; ?>
 					<a class="btn btn-primary" href="?action=edit&id=<?php echo $id; ?>">Modifier</a>
 					<?php if(!empty($id)): ?>
 					<a class="btn btn-danger" href="?action=delete&id=<?php echo $id; ?>">Supprimer</a>
