@@ -78,92 +78,64 @@
                 </div>
                 
     			<div class="col-xl-3 col-md-6 mb-4">
-    			<!-- 5 derniers Adhérents -->
-			<div class="col-md-6 m15">
-				<div class="titre">
-					<h2>5 derniers Adhérents</h2>
-				</div>
-				<div class="table">
-    				<div class="ligne">
-        				<a href="?action=view&id=1">
-        					<div class="col-md-10 nopad">
-        						<span class="glyphicon glyphicon-chevron-right"></span> Jean Dupont
-        					</div>
-        					<div class="col-md-2 nopad text-right">
-        						<span class="badge backgrey">validé</span>
-        					</div>
-        					<div class="clear"></div>
-        				</a>
-    				</div>
-    				<div class="ligne backlightgrey">
-        				<a href="?action=view&id=1">
-        					<div class="col-md-10 nopad">
-        						<span class="glyphicon glyphicon-chevron-right"></span> Mohamed Salah
-        					</div>
-        					<div class="col-md-2 nopad text-right">
-        						<span class="badge backred">à valider</span>
-        					</div>
-        					<div class="clear"></div>
-        				</a>
-    				</div>
-    				<div class="ligne">
-        				<a href="?action=view&id=1">
-        					<div class="col-md-10 nopad">
-        						<span class="glyphicon glyphicon-chevron-right"></span> Moman
-        					</div>
-        					<div class="col-md-2 nopad text-right">
-        						<span class="badge backred">à valider</span>
-        					</div>
-        					<div class="clear"></div>
-        				</a>
-    				</div>
-				</div>
-			</div>
-		
-			<!-- 5 Adhérents impayés -->
-			<div class="col-md-6 m15">
-				<div class="titre">
-					<h2>5 cotisations impayé</h2>
-				</div>
-				<div class="table">
-    				<div class="ligne">
-        				<a href="?action=view&id=1">
-        					<div class="col-md-10 nopad">
-        						<span class="glyphicon glyphicon-chevron-right"></span> Jean Dupont
-        					</div>
-        					<div class="col-md-2 nopad text-right">
-        						<span class="badge backred">impayé</span>
-        					</div>
-        					<div class="clear"></div>
-        				</a>
-    				</div>
-    				<div class="ligne backlightgrey">
-        				<a href="?action=view&id=1">
-        					<div class="col-md-10 nopad">
-        						<span class="glyphicon glyphicon-chevron-right"></span> Mohamed Salah
-        					</div>
-        					<div class="col-md-2 nopad text-right">
-        						<span class="badge backred">impayé</span>
-        					</div>
-        					<div class="clear"></div>
-        				</a>
-    				</div>
-    				<div class="ligne">
-        				<a href="?action=view&id=1">
-        					<div class="col-md-10 nopad">
-        						<span class="glyphicon glyphicon-chevron-right"></span> Moman
-        					</div>
-        					<div class="col-md-2 nopad text-right">
-        						<span class="badge backred">impayé</span>
-        					</div>
-        					<div class="clear"></div>
-        				</a>
-    				</div>
-				</div>
-			</div>
+        			<!-- 5 derniers Adhérents -->
+        			<div class="col-md-6">
+        				<div class="titre">
+        					<h2>5 derniers Adhérents</h2>
+        				</div>
+        				<div class="table">
+        				<?php 
+        				if(!empty($TLastAdherents)) {
+        				    $i=0;
+        				    foreach($TLastAdherents as $adherent) {
+        				        if($i>4) continue;
+        				        ?>
+            				<div class="ligne">
+            					<div class="col-md-8 nopad">
+            						<?php echo $adherent->get_nomurl(); ?>
+        						</div>
+            					<div class="col-md-4 nopad text-right">
+            						<?php echo $adherent->get_status(); ?>
+            					</div>
+            					<div class="clear"></div>
+            				</div>
+        				        <?php 
+        				        $i++;
+        				    }
+        				}
+        				?>
+        				</div>
+        			</div>
+        			
+					<!-- 5 impayés Adhérents -->
+        			<div class="col-md-6">
+        				<div class="titre">
+        					<h2>5 Adhésions impayées</h2>
+        				</div>
+        				<div class="table">
+        				<?php 
+        				if(!empty($TNotPaidAdherents)) {
+        				    $i=0;
+        				    foreach($TNotPaidAdherents as $adherent) {
+        				        if($i>4) continue;
+        				        ?>
+            				<div class="ligne">
+            					<div class="col-md-8 nopad">
+            						<?php echo $adherent->get_nomurl(); ?>
+        						</div>
+            					<div class="col-md-4 nopad text-right">
+            						<?php echo $adherent->get_status(); ?>
+            					</div>
+            					<div class="clear"></div>
+            				</div>
+        				        <?php 
+        				        $i++;
+        				    }
+        				}
+        				?>
+        				</div>
+        			</div>
     			</div>
-                
-                
 			</div>
 			
 			<hr class="m15">
@@ -177,7 +149,9 @@
     				<div class="table">
     				<?php 
     				if(!empty($TFullSessions)) {
+    				    $i=0;
     				    foreach($TFullSessions as $session) {
+    				        if($i>4) continue;
     				        ?>
         				<div class="ligne">
         					<div class="col-md-10 nopad">
@@ -189,12 +163,12 @@
         					<div class="clear"></div>
         				</div>
     				        <?php 
+    				        $i++;
     				    }
     				}
     				?>
     				</div>
     			</div>
-    			
     			
     			<!-- 5 sessions not full -->
     			<div class="col-md-4">
@@ -204,7 +178,9 @@
     				<div class="table">
     				<?php 
     				if(!empty($TNotFullSessions)) {
+    				    $i=0;
     				    foreach($TNotFullSessions as $session) {
+    				        if($i>4) continue;
     				        ?>
         				<div class="ligne">
         					<div class="col-md-10 nopad">
@@ -216,6 +192,7 @@
         					<div class="clear"></div>
         				</div>
     				        <?php 
+    				        $i++;
     				    }
     				}
     				?>
@@ -230,7 +207,9 @@
     				<div class="table">
     				<?php 
     				if(!empty($TEmptySessions)) {
+    				    $i=0;
     				    foreach($TEmptySessions as $session) {
+    				        if($i>4) continue;
     				        ?>
         				<div class="ligne">
         					<div class="col-md-10 nopad">
@@ -242,6 +221,7 @@
         					<div class="clear"></div>
         				</div>
     				        <?php 
+    				        $i++;
     				    }
     				}
     				?>

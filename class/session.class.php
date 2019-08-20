@@ -117,7 +117,7 @@ class Session extends CommonObject
 	        foreach($TSessions as $k => $sess) {
 	            if($full == 0) {
 	                // Cas session non pleines
-	                if($sess->nb_places <= $sess->nb_adh) {
+	                if($sess->nb_places <= $sess->nb_adh || $sess->nb_adh == 0) {
 	                    unset($TSessions[$k]);
 	                }
 	            } else if($full == -1) {

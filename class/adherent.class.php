@@ -55,6 +55,12 @@ class Adherent extends CommonObject
 	    return $res;
 	}
 	
+	public function fetchAllLast() {
+	    $this->defaultorder='datec';
+	    $TAll = $this->fetchAll();
+	    return $TAll;
+	}
+	
 	public function get_age() {
 	    $age = (int) ((time() - strtotime($this->birth_date)) / 3600 / 24 / 365);
 	    return $age;
