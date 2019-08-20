@@ -302,7 +302,7 @@
 				<?php
 			} elseif($action == 'view') {
 				?>
-			<h4><span class="glyphicon <?php echo $object->picto;?>"></span> Fiche Adhérant</h4>
+			<h4><span class="glyphicon <?php echo $object->picto;?>"></span> Fiche Adhérent</h4>
 			
 			<div class="row">
 				<div class="col-md-2">

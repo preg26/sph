@@ -1,23 +1,23 @@
 
-<div class="col-md-12 pt15" id="adherant-liste">
-	<h4>Liste des Adhérants de la session  <?php echo $object->get_badge_places(); ?>  <a id="show-adherant" class="glypicon glyphicon-plus" href="#adherant-liste"></a></h4>
-	<div class="row" id="add_adherant" style="display:none">
+<div class="col-md-12 pt15" id="adherent-liste">
+	<h4>Liste des Adhérents de la session  <?php echo $object->get_badge_places(); ?>  <a id="show-adherent" class="glypicon glyphicon-plus" href="#adherent-liste"></a></h4>
+	<div class="row" id="add_adherent" style="display:none">
 		<form method="post" action="">
 			<div class="row">
 				<div class="col-md-12 p5 backlightgrey">
-					<label for="fk_user">Ajouter un adhérant : </label>
-					<select name="fk_adherant" id="fk_adherant">
+					<label for="fk_user">Ajouter un Adhérent : </label>
+					<select name="fk_adherent" id="fk_adherent">
 						<?php 
-						if(!empty($TAdherant)) {
-						    foreach($TAdherant as $adherant) {
-						        echo '<option value="'.$adherant->rowid.'" '.((!empty($object->TAdherants[$adherant->rowid]))?'disabled="disabled"':'').'>';
-						        echo $adherant->lastname.' '.$adherant->firstname;
+						if(!empty($TAdherent)) {
+						    foreach($TAdherent as $adherent) {
+						        echo '<option value="'.$adherent->rowid.'" '.((!empty($object->TAdherents[$adherent->rowid]))?'disabled="disabled"':'').'>';
+						        echo $adherent->lastname.' '.$adherent->firstname;
 						        echo '</option>';
 						    }
 						}
 						?>
 					</select>
-    				<input type="hidden" name="action" value="add_adherant" />
+    				<input type="hidden" name="action" value="add_adherent" />
     				<input type="hidden" name="id" value="<?php echo $object->rowid; ?>" />
     				<input type="hidden" name="fk_session" value="<?php echo $object->rowid; ?>" />
     				<input type="submit" name="envoyer" value="Ajouter" class="btn btn-info"/>
@@ -37,8 +37,8 @@
 			<div class="col-md-1 text-right">Actions</div>
 		</div>
 		<?php
-      	if(!empty($object->TAdherants)) {
-      	    foreach($object->TAdherants as $item) {
+      	if(!empty($object->TAdherents)) {
+      	    foreach($object->TAdherents as $item) {
       	?>
 		<div class="row">
 			<div class="col-md-3">

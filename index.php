@@ -7,8 +7,12 @@ $page->TCss[] = 'css/huebee.css';
 
 $controller->check_user();
 $page->name = 'index';
-$page->title = 'Accueil - SPH Gestion des adhérants';
+$page->title = 'Accueil - SPH Gestion des Adhérents';
 
+$session = new Session($PDOdb);
+$TFullSessions = $session->fetchAllFull(1);
+$TNotFullSessions = $session->fetchAllFull(0);
+$TEmptySessions = $session->fetchAllFull(-1);
 
 switch ($action) {
 	case 'new' :

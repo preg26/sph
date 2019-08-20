@@ -363,7 +363,7 @@
 			</div>        
 			<div class="row pt15">
 				<div class="col-md-12 text-right">
-					<?php if(!empty($object->TAdherants)): ?>
+					<?php if(!empty($object->TAdherents)): ?>
 					<a class="btn btn-warning" href="?action=checkin&id=<?php echo $id; ?>">Check-In</a>
 					<?php endif; ?>
 					<a class="btn btn-primary" href="?action=edit&id=<?php echo $id; ?>">Modifier</a>
@@ -374,7 +374,7 @@
 			</div>
 		<?php
 		include 'list_coachs.tpl.php';
-		include 'list_adherants.tpl.php';
+		include 'list_adherents.tpl.php';
 			}
 		?>
 		</div>

@@ -6,7 +6,7 @@
 		<div class="navbar-collapse collapse">
 			<ul class="nav navbar-nav">
 				<li<?php if($page->name == 'index') echo ' class="active"'; ?>><a href="./">Accueil</a></li>
-				<li<?php if($page->name == 'adherant') echo ' class="active"'; ?>><a href="./adherant.php">Adhérants</a></li>
+				<li<?php if($page->name == 'adherent') echo ' class="active"'; ?>><a href="./adherent.php">Adhérents</a></li>
 				<li<?php if($page->name == 'session') echo ' class="active"'; ?>><a href="./session.php">Sessions</a></li>
 				<?php if (!empty($user->admin)) { ?>
 				<li<?php if($page->name == 'lieu') echo ' class="active"'; ?>><a href="./lieu.php">Lieux</a></li>

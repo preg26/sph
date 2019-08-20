@@ -81,10 +81,10 @@
 			<div class="row">
 				<div class="col-md-6">
     				<div class="col-md-4">
-    					Nombre d'adhérants
+    					Nombre d'Adhérents
     				</div>
     				<div class="col-md-8">
-    					<?php echo count($object->TAdherants); ?>
+    					<?php echo count($object->TAdherents); ?>
     				</div>
 				</div>
 				<div class="col-md-6">
@@ -138,17 +138,17 @@
     				</div>
     				<?php 
     				}
-    				// Boucle adhérants
-    				foreach($object->TAdherants as $adherant) {
+    				// Boucle Adhérents
+    				foreach($object->TAdherents as $adherent) {
     				?>
     				
     				<div class="row">
-    					<div class="col-md-3"><?php echo $adherant->get_nomurl(); ?></div>
-    					<div class="col-md-2"><?php echo $adherant->firstname; ?></div>
-    					<div class="col-md-2">Adhérant (<?php echo $adherant->get_age(); ?> ans)</div>
-    					<div class="col-md-3"><?php echo $adherant->email; ?></div>
-    					<div class="col-md-1"><?php echo $adherant->get_status(); ?></div>
-    					<div class="col-md-1 text-right"><input type="checkbox" name="adherant[]" value="<?php echo $adherant->rowid; ?>" /></div>
+    					<div class="col-md-3"><?php echo $adherent->get_nomurl(); ?></div>
+    					<div class="col-md-2"><?php echo $adherent->firstname; ?></div>
+    					<div class="col-md-2">Adhérent (<?php echo $adherent->get_age(); ?> ans)</div>
+    					<div class="col-md-3"><?php echo $adherent->email; ?></div>
+    					<div class="col-md-1"><?php echo $adherent->get_status(); ?></div>
+    					<div class="col-md-1 text-right"><input type="checkbox" name="adherent[]" value="<?php echo $adherent->rowid; ?>" /></div>
     				</div>
     				<?php 
     				}

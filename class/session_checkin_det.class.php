@@ -11,7 +11,7 @@ class Session_Checkin_det extends CommonObject
 	protected $TChamps2 = array(
 	    'fk_checkin'=>'number'
 	    ,'fk_user'=>'number'
-	    ,'fk_adherant'=>'number'
+	    ,'fk_adherent'=>'number'
 	);
 	
 	var $defaultorder='fk_checkin';
@@ -20,8 +20,8 @@ class Session_Checkin_det extends CommonObject
 	var $rowid;
 	var $fk_user;
 	var $coach;
-	var $fk_adherant;
-	var $adherant;
+	var $fk_adherent;
+	var $adherent;
 	var $fk_checkin;
 	var $checkin;
 	var $statut;
@@ -35,7 +35,7 @@ class Session_Checkin_det extends CommonObject
 	    $checkin->fetch($this->fk_checkin);
 	    $this->checkin = $checkin;
 	    
-	    if(!empty($this->fk_adherant)) $this->adherant = $this->checkin->session->TAdherants[$this->fk_adherant];
+	    if(!empty($this->fk_adherent)) $this->adherent = $this->checkin->session->TAdherents[$this->fk_adherent];
 	    if(!empty($this->fk_user)) $this->coach = $this->checkin->session->TCoachs[$this->fk_user];
 	    
 	    return $res;

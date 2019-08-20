@@ -1,12 +1,12 @@
 <?php
 
 /**
- * Type class
+ * Adhérent class
  */
-class Adherant extends CommonObject
+class Adherent extends CommonObject
 {
-	public $element='adherant';
-	public $table_element='adherant';
+	public $element='adherent';
+	public $table_element='adherent';
 	
 	protected $TChamps2 = array(
 	    'firstname'=>'string'
@@ -111,8 +111,8 @@ class Adherant extends CommonObject
 	
 	public function fetch_sessions() {
         $TRes = array();
-	    $link = new Session_Adherant($this->PDOdb);
-	    $TLinks = $link->fetchAllFor(array(array('column' => 'fk_adherant', 'operator' => '=', 'value' => $this->rowid)));
+	    $link = new Session_Adherent($this->PDOdb);
+	    $TLinks = $link->fetchAllFor(array(array('column' => 'fk_adherent', 'operator' => '=', 'value' => $this->rowid)));
 	    if(!empty($TLinks)) {
 	        foreach($TLinks as $link) {
 	            $session = new Session($this->PDOdb);

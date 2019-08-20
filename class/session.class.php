@@ -31,9 +31,11 @@ class Session extends CommonObject
 	var $fk_periode;
 	var $periode;
 	var $statut;
-	var $TAdherants = array();
+	var $TAdherents = array();
 	var $TCoachs = array();
 	var $TCheckin = array();
+	var $nb_adh;
+	var $nb_coach;
 	var $picto = 'glyphicon-book';
 	
 	public function fetch($id) {
@@ -52,28 +54,29 @@ class Session extends CommonObject
 	    $periode->fetch($this->fk_periode);
 	    $this->periode = $periode;
 	    
-	    // Fetching adherants and coachs
-	    $this->fetch_adherants();
+	    // Fetching adherents and coachs
+	    $this->fetch_adherents();
 	    $this->fetch_coachs();
 	    
 	    return $res;
 	}
 	
-	public function fetch_adherants() {
+	public function fetch_adherents() {
 	    $TRes = array();
-	    $linkAdh = new Session_Adherant($this->PDOdb);
+	    $linkAdh = new Session_Adherent($this->PDOdb);
 	    
 	    $TSearch = array(array('column' => 'fk_session', 'operator' => '=', 'value' => $this->rowid));
 	    $TLinkAdh = $linkAdh->fetchAllFor($TSearch);
 	    
 	    if(!empty($TLinkAdh)) {
 	        foreach($TLinkAdh as $adh) {
-	            $adherant = new Adherant($this->PDOdb);
-	            $adherant->fetch($adh->fk_adherant);
-	            $TRes[$adh->fk_adherant] = $adherant;
+	            $adherent = new Adherent($this->PDOdb);
+	            $adherent->fetch($adh->fk_adherent);
+	            $TRes[$adh->fk_adherent] = $adherent;
 	        }
 	    }
-	    $this->TAdherants = $TRes;
+	    $this->TAdherents = $TRes;
+	    $this->nb_adh = count($this->TAdherents);
 	    return $TRes;
 	}
 	
@@ -92,6 +95,7 @@ class Session extends CommonObject
 	        }
 	    }
 	    $this->TCoachs = $TRes;
+	    $this->nb_coach = count($this->TCoachs);
 	    return $TRes;
 	}
 	
@@ -101,6 +105,31 @@ class Session extends CommonObject
 	        foreach($TSessions as $k => $sess) {
 	            if($sess->fk_jeu != $idjeu) {
 	                unset($TSessions[$k]);
+	            }
+	        }
+	    }
+	    return $TSessions;
+	}
+	
+	public function fetchAllFull($full=1) {
+	    $TSessions = $this->fetchAll();
+	    if(!empty($TSessions)) {
+	        foreach($TSessions as $k => $sess) {
+	            if($full == 0) {
+	                // Cas session non pleines
+	                if($sess->nb_places <= $sess->nb_adh) {
+	                    unset($TSessions[$k]);
+	                }
+	            } else if($full == -1) {
+	                // Cas session vide
+	                if($sess->nb_adh > 0) {
+	                    unset($TSessions[$k]);
+	                }
+	            } else {
+	                // Cas session pleine
+	                if($sess->nb_places > $sess->nb_adh) {
+	                    unset($TSessions[$k]);
+	                }
 	            }
 	        }
 	    }
@@ -124,18 +153,18 @@ class Session extends CommonObject
 	    return $res;
 	}
 	
-	public function remove_adherant($idadherant) {
+	public function remove_adherent($idadherent) {
 	    $res = null;
-	    $linkAdherant = new Session_Adherant($this->PDOdb);
+	    $linkAdherent = new Session_Adherent($this->PDOdb);
 	    
 	    $TSearch = array(
 	        array('column' => 'fk_session', 'operator' => '=', 'value' => $this->rowid)
-	        ,array('column'=>'fk_adherant', 'operator' => '=', 'value' => $idadherant)
+	        ,array('column'=>'fk_adherent', 'operator' => '=', 'value' => $idadherent)
 	    );
-	    $TLinkAdherant = $linkAdherant->fetchAllFor($TSearch);
-	    if(!empty($TLinkAdherant)) {
-	        foreach($TLinkAdherant as $adherant) {
-	            $res = $adherant->delete();
+	    $TLinkAdherent = $linkAdherent->fetchAllFor($TSearch);
+	    if(!empty($TLinkAdherent)) {
+	        foreach($TLinkAdherent as $adherent) {
+	            $res = $adherent->delete();
 	        }
 	    }
 	    return $res;
@@ -167,7 +196,7 @@ class Session extends CommonObject
 	
 	public function get_badge_places() {
 	    $class = 'backgreen';
-	    $nb_adh = count($this->TAdherants);
+	    $nb_adh = $this->nb_adh;
 	    $nb_places = $this->nb_places;
 	    
 	    // Calcul du ratio d'occupation
@@ -204,10 +233,10 @@ class Session extends CommonObject
 	    $res = '0/0';
 	    $this->fetch_checkin();
 	    if(!empty($idAdh) && count($this->TCheckin) > 0) {
-	        // Cas adhérant
+	        // Cas Adhérent
 	        $TSearch = array(
 	            array('column'=>'fk_checkin', 'operator'=>'IN','value'=>'('.implode(',',array_keys($this->TCheckin)).')')
-	            ,array('column'=>'fk_adherant', 'operator'=>'=','value'=>$idAdh)
+	            ,array('column'=>'fk_adherent', 'operator'=>'=','value'=>$idAdh)
 	        );
 	        $checkindet = new Session_Checkin_det($this->PDOdb);
 	        $TRes = $checkindet->fetchAllFor($TSearch);

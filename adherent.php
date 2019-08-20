@@ -2,10 +2,10 @@
 require_once 'includes/preload.php';
 
 $controller->check_user();
-$page->name = 'adherant';
-$page->title = 'Gestion des adhérants';
+$page->name = 'adherent';
+$page->title = 'Gestion des Adhérents';
 
-$object = new Adherant($PDOdb);
+$object = new Adherent($PDOdb);
 if(!empty($id)) $object->fetch($id);
 
 switch ($action) {
@@ -13,7 +13,7 @@ switch ($action) {
         $object->statut = 1;
         $res = $object->save();
         if($res) {
-            header('Location:./adherant.php?action=view&id='.$id);
+            header('Location:./adherent.php?action=view&id='.$id);
         } else {
             echo 'Erreur, veuillez contacter l\'administrateur';
         }
@@ -23,7 +23,7 @@ switch ($action) {
         $object->statut = 2;
         $res = $object->save();
         if($res) {
-            header('Location:./adherant.php?action=view&id='.$id);
+            header('Location:./adherent.php?action=view&id='.$id);
         } else {
             echo 'Erreur, veuillez contacter l\'administrateur';
         }
@@ -34,7 +34,7 @@ switch ($action) {
         $object->set_vars();
         $res = $object->save();
         if($res) {
-            header('Location:./adherant.php');
+            header('Location:./adherent.php');
         } else {
             echo 'Erreur, veuillez contacter l\'administrateur';
         }
@@ -43,7 +43,7 @@ switch ($action) {
     case 'delete':
         $res = $object->delete();
         if($res) {
-            header('Location:./adherant.php');
+            header('Location:./adherent.php');
         } else {
             echo 'Erreur, veuillez contacter l\'administrateur';
         }
@@ -59,12 +59,12 @@ switch($action) {
     case 'new' :
     case 'view' :
     case 'edit' :
-        include 'tpl/adherant/card.tpl.php';
+        include 'tpl/adherent/card.tpl.php';
         break;
     case 'list':
     default :
         $TObjects = $object->fetchAll();
-        include 'tpl/adherant/list.tpl.php';
+        include 'tpl/adherent/list.tpl.php';
         break;
 }
 

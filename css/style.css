@@ -166,6 +166,20 @@ input[name="status"] {
 .statut.closed {background:#eeeeec;}
 .statut.notpaid {background:#cc0000;}
 
+
+/* HomePage */
+.card {
+	background:#fff;
+	border-radius : 5px;
+	border: 1px solid #FEFEFE;
+	box-shadow: 0 0 30px #EFEFEF;
+}
+
+.border-left-success {
+	border-left: 7px solid #729fcf;
+}
+
+
 /* Connexion */
 .form-signin {
     margin: 0 auto;
