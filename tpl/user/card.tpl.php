@@ -216,7 +216,11 @@
 					<?php endif; ?>
 				</div>
 			</div>
+			
+			<div class="row"><hr/></div>
+			
 		<?php
+		      include 'list_sessions.tpl.php';
 			}
 		?>
 		</div>

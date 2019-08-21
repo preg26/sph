@@ -72,7 +72,7 @@ class Adherent extends CommonObject
 	    $i = 1;
 	    if(!empty($this->TSessions)) {
 	        foreach($this->TSessions as $session) {
-	            if($i==2) $res.='<br/>';
+	            if($i % 2 == 0) $res.='<br/>';
 	            $nomurl = $session->get_nomurl('ref');
 	            $res .= $nomurl;
 	            $i++;

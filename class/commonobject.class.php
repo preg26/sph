@@ -348,10 +348,7 @@ abstract class CommonObject
 	    $temp_user = new User($this->PDOdb);
 	    if(!empty($this->fk_user_modif)) {
 	        $temp_user->fetch($this->fk_user_modif);
-	        $ret = '<a href="user.php?action=view&id='.$temp_user->rowid.'">';
-	        $ret .='<span class="glyphicon '.$temp_user->picto.'"></span> ';
-	        $ret .= $temp_user->lastname.' '.$temp_user->firstname;
-	        $ret .='</a>';
+	        $ret = $temp_user->get_nomurl();
 	    }
 	    return $ret;
 	}
@@ -361,10 +358,7 @@ abstract class CommonObject
 	    $temp_user = new User($this->PDOdb);
 	    if(!empty($this->fk_user_creat)) {
 	        $temp_user->fetch($this->fk_user_creat);
-	        $ret = '<a href="user.php?action=view&id='.$temp_user->rowid.'">';
-	        $ret .='<span class="glyphicon '.$temp_user->picto.'"></span> ';
-	        $ret .= $temp_user->lastname.' '.$temp_user->firstname;
-	        $ret .='</a>';
+	        $ret = $temp_user->get_nomurl();
 	    }
 	    return $ret;
 	}

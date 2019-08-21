@@ -75,5 +75,20 @@ class User extends CommonObject
 		$this->pass_crypted = sha1($this->pass_crypted);
 		return parent::create();
 	}
+	
+	public function fetch_sessions() {
+        $TRes = array();
+        $link = new Session_Coach($this->PDOdb);
+        $TLinks = $link->fetchAllFor(array(array('column' => 'fk_user', 'operator' => '=', 'value' => $this->rowid)));
+        if(!empty($TLinks)) {
+            foreach($TLinks as $link) {
+                $session = new Session($this->PDOdb);
+                $session->fetch($link->fk_session);
+                $TRes[$session->rowid] = $session;
+            }
+        }
+        $this->TSessions = $TRes;
+        return $TRes;
+	}
 		
 }

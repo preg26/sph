@@ -151,6 +151,27 @@ input[name="status"] {
 	color:#9a33b7;
 }
 
+.table {
+	border-radius:4px;
+	padding:2px 3px;
+	background:#f8f8f8;
+}
+
+.table > .ligne:nth-child(2n) {
+	background:#fdfdfd;
+}
+
+.table > .row:nth-child(1) {
+	font-weight:bold;
+	background:#729fcf;
+	color:white;
+}
+.table > .row {
+	background:#f8f8f8;
+}
+.table > .row:nth-child(2n) {
+	background:#fdfdfd;
+}
 
 /* Statuts */
 .statut {
@@ -166,6 +187,14 @@ input[name="status"] {
 .statut.closed {background:#eeeeec;}
 .statut.notpaid {background:#cc0000;}
 
+
+/* Theme */
+.navbar-default {
+	background: #729fcf;
+}
+.navbar-default .navbar-nav > li > a {
+	color:#fff;
+}
 
 /* HomePage */
 .card {

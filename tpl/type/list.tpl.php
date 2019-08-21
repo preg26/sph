@@ -29,7 +29,7 @@
             	      		<?php echo $object->datec; ?>
 					</div>
 					<div class="col-md-2">
-            	      		<?php echo $object->fk_user_creat; ?>
+        					<?php echo $object->get_createby(); ?>
 					</div>
 					<div class="col-md-1">
             	      		<?php echo $object->get_status(); ?>

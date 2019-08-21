@@ -313,36 +313,42 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-md-2">
-					Genre
-				</div>
-				<div class="col-md-10">
-					<?php echo $object->sex; ?>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-2">
-					Prénom
-				</div>
-				<div class="col-md-10">
-					<?php echo $object->firstname; ?>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-2">
-					Nom
-				</div>
-				<div class="col-md-10">
-					<?php echo $object->lastname; ?>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-2">
-					Email
-				</div>
-				<div class="col-md-10">
-					<?php echo $object->email; ?>
-				</div>
+				<div class="col-md-6">
+        			<div class="row">
+        				<div class="col-md-4">
+        					Genre
+        				</div>
+        				<div class="col-md-8">
+							<?php echo $object->sex; ?>
+        				</div>
+        			</div>
+        			<div class="row">
+        				<div class="col-md-4">
+        					Nom de famille
+        				</div>
+        				<div class="col-md-8">
+        					<?php echo $object->lastname; ?>
+        				</div>
+        			</div>
+    			</div>
+				<div class="col-md-6">
+        			<div class="row">
+        				<div class="col-md-4">
+        					Email
+        				</div>
+        				<div class="col-md-8">
+							<?php echo $object->email; ?>
+        				</div>
+        			</div>
+        			<div class="row">
+        				<div class="col-md-4">
+        					Prénom
+        				</div>
+        				<div class="col-md-8">
+        					<?php echo $object->firstname; ?>
+        				</div>
+        			</div>
+    			</div>
 			</div>
 			
 			<div class="row"><hr/></div>
@@ -374,14 +380,6 @@
         					<?php echo $object->town; ?>
         				</div>
         			</div>
-        			<div class="row">
-        				<div class="col-md-4">
-        					Pays
-        				</div>
-        				<div class="col-md-8">
-        					<?php echo $object->country; ?>
-        				</div>
-        			</div>
     			</div>
 				<div class="col-md-6">
         			<div class="row">
@@ -398,6 +396,14 @@
         				</div>
         				<div class="col-md-8">
         					<?php echo $object->job; ?>
+        				</div>
+        			</div>
+        			<div class="row">
+        				<div class="col-md-4">
+        					Pays
+        				</div>
+        				<div class="col-md-8">
+        					<?php echo $object->country; ?>
         				</div>
         			</div>
     			</div>
@@ -418,10 +424,10 @@
         			</div>
         			<div class="row">
         				<div class="col-md-4">
-        					Pays
+        					Ville
         				</div>
         				<div class="col-md-8">
-        					<?php echo $object->birth_country; ?>
+        					<?php echo $object->birth_town; ?>
         				</div>
         			</div>
     			</div>
@@ -436,10 +442,10 @@
         			</div>
         			<div class="row">
         				<div class="col-md-4">
-        					Ville
+        					Pays
         				</div>
         				<div class="col-md-8">
-        					<?php echo $object->birth_town; ?>
+        					<?php echo $object->birth_country; ?>
         				</div>
         			</div>
     			</div>
@@ -502,7 +508,11 @@
 					<?php endif; ?>
 				</div>
 			</div>
+			
+			<div class="row"><hr/></div>
+			
 		<?php
+		      include 'list_sessions.tpl.php';
 			}
 		?>
 		</div>
