@@ -85,7 +85,7 @@
 				<?php
 			} elseif($action == 'view') {
 				?>
-			<h4><span class="glyphicon <?php echo $object->picto;?>"></span> Fiche Type</h4>
+			<h4><span class="glyphicon <?php echo $object->picto;?>"></span> Fiche Période</h4>
 			<div class="row">
 				<div class="col-md-2">
 					Libellé
@@ -107,7 +107,7 @@
 					Créé par
 				</div>
 				<div class="col-md-10">
-					<?php echo $object->fk_user_creat; ?>
+					<?php echo $object->get_createby(); ?>
 				</div>
 			</div>
 			<div class="row">
@@ -123,7 +123,7 @@
 					Modifié par
 				</div>
 				<div class="col-md-10">
-					<?php echo $object->fk_user_modif; ?>
+					<?php echo $object->get_editby(); ?>
 				</div>
 			</div>
 			<div class="row">
@@ -131,7 +131,7 @@
 					Statut
 				</div>
 				<div class="col-md-10">
-					<?php echo $object->statut; ?>
+					<?php echo $object->get_status(1); ?>
 				</div>
 			</div>
 			<div class="row pt15">

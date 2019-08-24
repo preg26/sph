@@ -15,6 +15,7 @@ $TNotFullSessions = $session->fetchAllFull(0);
 $TEmptySessions = $session->fetchAllFull(-1);
 $adherent = new Adherent($PDOdb);
 $TAdherents = $adherent->fetchAllFor(array(array('column'=>'statut', 'operator'=>'>','value'=>'0')));
+$TNewAdherents = $adherent->fetchAllFor(array(array('column'=>'statut', 'operator'=>'=','value'=>'0')));
 $TLastAdherents = $adherent->fetchAllLast();
 $TNotPaidAdherents = $adherent->fetchAllFor(array(array('column'=>'statut', 'operator'=>'=','value'=>'1')));
 $coach = new User($PDOdb);
