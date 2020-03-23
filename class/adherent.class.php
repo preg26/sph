@@ -130,4 +130,23 @@ class Adherent extends CommonObject
 	    return $TRes;
 	}
 	
+	public function fetchAll($type = null) {
+	    $TRes = array();
+	    $ret = parent::fetchAll();
+	    if(!empty($ret)) {
+	        foreach($ret as $adh) {
+	            if($type == 'prospect') {
+	                if(empty($adh->statut)){
+	                    $TRes[] = $adh;
+	                }
+	            }else{
+	                if($adh->statut > 0) {
+	                    $TRes[] = $adh;
+	                }
+	            }
+	        }
+	    }
+	    return $TRes;
+	}
+	
 }

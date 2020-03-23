@@ -5,7 +5,7 @@
 	?>
 	<div class="col-md-10 pt15">
 		<div class="col-md-12">
-			<h4>Liste des Adhérents</h4>
+			<h4>Liste des <?php if(!empty($type)) echo ' Prospects '; else echo 'Adhérents';?></h4>
 			
 			<div class="table">
 				<div class="row">

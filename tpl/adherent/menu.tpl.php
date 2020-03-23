@@ -14,6 +14,12 @@
 	      		<div class="clear"></div>
 	      	</a>
 	      </li>
+	      <li>
+	      	<a href="?action=list&type=prospect">
+	      		<span class="glyphicon glyphicon-list"></span> Liste des Prospects
+	      		<div class="clear"></div>
+	      	</a>
+	      </li>
 		</ul>
 	</div>
 </div>

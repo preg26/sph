@@ -7,6 +7,7 @@ $page->title = 'Gestion des Adhérents';
 
 $object = new Adherent($PDOdb);
 if(!empty($id)) $object->fetch($id);
+$type = GETPOST('type');
 
 switch ($action) {
     case 'valid':
@@ -63,7 +64,7 @@ switch($action) {
         break;
     case 'list':
     default :
-        $TObjects = $object->fetchAll();
+        $TObjects = $object->fetchAll($type);
         include 'tpl/adherent/list.tpl.php';
         break;
 }
